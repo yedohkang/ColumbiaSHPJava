@@ -6,69 +6,95 @@ import java.io.*;
 
 public class CDCollection {
 	
-	private CD[] collection;
-	private int count;
-	private double totalCost;
-	private CD[] newcollection;
+	private CD[] collection; // CD collection array of CD objects
+	private double totalCost; // total cost
+	private int _size; // # of CDs /  # of meaningful elements in the array
+	private int _lastPos; // last position of meaningful element
 	
 	public CDCollection() {
-		collection = new CD[5];
-		newcollection = new CD[5];
-		count += 1;
+		collection = new CD[100];
+		_size = 0;
+		_lastPos = -1;
+		totalCost = 0;
 	}
 	
-	public void addCD (String title, String artist, double cost, int tracks) {
-		// create new CD
-		CD one = new CD (title, artist, cost, tracks);
-		// place in order
-		int i = 0;
-		while (newcollection[i] != null && one.getArtist().compareTo(newcollection[i].getArtist()) > 0) {
-			i += 1;
+	public void addCD (String title, String artist, double cost, int tracks) throws IllegalArgumentException {
+		
+		if (artist.equals("Kanye West") == true) {
+			throw new IllegalArgumentException ("Invalid Artist. Please add another CD."); // exception!
 		}
+		
+		else {
+			
+			// create new CD
+			CD one = new CD (title, artist, cost, tracks);
+			
+			// place in order
+			// find index (where it belongs)
+			int index = 0;
+			while (collection[index] != null && one.getArtist().compareTo(collection[index].getArtist()) > 0) {
+				index += 1;
+			}
 
-		// make a copy until the new CD
-		int y = 0;
-		while (y < i) {
-			collection[y] = newcollection[y];
-			y += 1;
-		} 
-		
-		collection[i] = one;
-		
-		for (int x = i + 1; x < newcollection.length; x++) {
-			collection[x] = newcollection[x];
+			// insert!
+			for (int x = _size; x >= index; x -= 1){
+				collection[x + 1] = collection[x];
+			}
+			collection[index] = one; // insert
+			if (_lastPos >= index) {
+				_lastPos += 1; // bc every existing element shifts one to the right
+			}
+			else {
+				_lastPos = index; // _lastPos will be index if _lastPos is less than index
+			}
+			
+			_size += 1; // update size
+			totalCost += one.getCost(); // update total cost
 		}
-		
-		count += 1;
 	}
 	
-	//public void removeCD (String title) {
+	public void removeCD (String title) throws IllegalArgumentException {
 		
-		
-		//}
-	public String toString() {
-		String retStr = "";
-		int i = 0;
-		int numCD = 0;
-		double totalCost = 0;
-		double avgCost = 0;
-		
-		while (i < count && collection[i] != null) {
-			i += 1;
-			numCD += 1;
-			totalCost += collection[i].getCost();
+		if (title.equals("Joy to the World") == true) {
+			throw new IllegalArgumentException ("Invalid Title Removal. Please remove another CD.");
 		}
 		
-		avgCost = totalCost / numCD;
+		else {
+			
+			// find index where title of song is
+			int index = 0;
+			while (collection[index].getTitle().equals(title) == false)  {
+				index += 1;
+			}
+			
+			// subtract cost
+			totalCost -= collection[index].getCost();
 		
-		retStr += "Total # of CDs: " + numCD + "\n";
+			// remove!
+			for (int x = index + 1; x < collection.length; x++) {
+				collection[x -1] = collection[x]; // shift everything after the index left
+			}
+	
+			_lastPos -= 1; // update last meaningful position
+			_size -= 1; // update size
+		}	
+	}
+	
+	public String toString() {
+		
+		String retStr = "";
+		double avgCost = 0;
+			
+		avgCost = totalCost / _size;
+
+		retStr += "\n\nTotal # of CDs: " + _size + "\n";
 		retStr += "Total Cost: " + totalCost + "\n";
 		retStr += "Average Cost: " + avgCost + "\n";
-		retStr += "List of CDs: " + "\n";
+		retStr += "\nList of CDs (Alphabetically by Artist): " + "\n";
 		
-		i = 0;
-		while (i < count && collection[i] != null) {
-			retStr += collection[i].toString() + "\n";
+		int i = 0;
+		while (i < _size && collection[i] != null) {
+			retStr += collection[i].toString() + "\n\n";
 			i+= 1;
 		}
 		

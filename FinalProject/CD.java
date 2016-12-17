@@ -1,6 +1,6 @@
 // Yedoh Kang
 // Accelerated Java 
-// Lab 4
+// FINAL PROJECT
 
 
 public class CD implements Comparable<CD> {
@@ -40,7 +40,7 @@ public class CD implements Comparable<CD> {
 	
 	public String toString() {
 		String retStr = "";
-		retStr += "Title: " + getTitle() + "\nArtist: " + getArtist() + "\nCost: " + getCost() + "\nNumber of Tracks: " + getNumberOfTracks();
+		retStr += "\nTitle: " + getTitle() + "\nArtist: " + getArtist() + "\nCost: " + getCost() + "\nNumber of Tracks: " + getNumberOfTracks();
 		return retStr;
 	}
 }

@@ -1,0 +1,13 @@
+
+Total # of CDs: 1
+Total Cost: 12.0
+Average Cost: 12.0
+
+List of CDs (Alphabetically by Artist): 
+
+Title: asdf
+Artist: asdf
+Cost: 12.0
+Number of Tracks: 12
+
+

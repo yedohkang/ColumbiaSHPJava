@@ -1,0 +1,19 @@
+
+Total # of CDs: 2
+Total Cost: 14.0
+Average Cost: 7.0
+
+List of CDs (Alphabetically by Artist): 
+
+Title: Pentatonix
+Artist: asdf
+Cost: 12.0
+Number of Tracks: 4
+
+
+Title: asdf
+Artist: sd
+Cost: 2.0
+Number of Tracks: 3
+
+
